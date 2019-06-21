@@ -1,0 +1,27 @@
+service: qiita
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: ${opt:stage, self:custom.defaultStage}
+  region: ap-northeast-1
+
+custom:
+  defaultStage: dev
+  environment:
+    dev: ${file(./dev.yml)}
+  pythonRequirements:
+    pythonBin: python
+
+plugins:
+  - serverless-python-requirements
+
+functions:
+  ranking:
+    handler: qiita_ranking.get_ranking
+    events:
+      - schedule: cron(0 13 ? * 1 *)
+    environment:
+      qiitaScraipingUrl: ${self:custom.environment.${self:provider.stage}.lambda.qiitaScraipingUrl}
+      slackWebhookUrl: ${self:custom.environment.${self:provider.stage}.lambda.slackWebhookUrl}
+

@@ -1,0 +1,3 @@
+lambda:
+  qiitaScraipingUrl: https://us-central1-qiita-trend-web-scraping.cloudfunctions.net/qiitaScraiping/
+  slackWebhookUrl: ※投稿するSlackチャンネルのWebHookURLを指定

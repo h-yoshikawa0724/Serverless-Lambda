@@ -9,14 +9,17 @@ RUN apt-get update -y && apt-get upgrade -y
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 
-# install aws-cli
-RUN pip install awscli
+COPY ./requirements.txt /src
 
-# install boto3
-RUN pip install boto3
+# install library
+RUN pip install --no-cache-dir -r requirements.txt
 
 # install serverless framework
 RUN npm install -g serverless
+
+# install serverless-python-requirements
+WORKDIR /
+RUN npm install --save serverless-python-requirements
 
 # set aws key
 RUN sls config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY
