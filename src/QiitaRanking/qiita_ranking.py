@@ -1,13 +1,14 @@
 import json
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 from pytz import timezone
 import os
 
 
 def get_ranking(event, context):
     type = 'weekly'
-    date = datetime.now(timezone('Asia/Tokyo')).strftime('%Y-%m-%d')
+    date = datetime.now(timezone('Asia/Tokyo'))
+    date = (date - timedelta(days=1)).strftime('%Y-%m-%d')
     url = os.environ['qiitaScraipingUrl'] + type + '/' + date
     response = requests.get(url).json()
 
