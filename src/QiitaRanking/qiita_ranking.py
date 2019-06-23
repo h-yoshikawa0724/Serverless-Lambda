@@ -8,6 +8,7 @@ import os
 def get_ranking(event, context):
     type = 'weekly'
     date = datetime.now(timezone('Asia/Tokyo'))
+    # 今日を指定するとデータが取得できないので前日を指定する
     date = (date - timedelta(days=1)).strftime('%Y-%m-%d')
     url = os.environ['qiitaScraipingUrl'] + type + '/' + date
     response = requests.get(url).json()
